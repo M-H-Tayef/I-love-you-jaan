@@ -50,8 +50,6 @@
             border: 2px solid rgba(255, 255, 255, 0.8);
             max-width: 90%;
             width: 550px;
-            /* This transform was breaking fixed positioning before */
-            /* We handle the button by moving it out of here in JS */
         }
 
         h1 {
@@ -165,59 +163,58 @@
         const questionSection = document.getElementById('question-section');
         const successMessage = document.getElementById('success-message');
 
-        // আপনার দেওয়া টেক্সট লিস্ট (হুবহু)
+        //
         const texts = [
-            "Are you sure?", "Think again!", "Babu please?", "eirokom kore na jaan!", 
-            "Really?", "Manush ki emon kore naki aschorjo chi chi?", "Emon koro keno jaan?", "reh Hae bolo!", "Just click Yes!",
-            "Last chance!", "kanna kore dibo kintu ekdom!", "Pleaseeeee", "kire mohila maya doya nai naki!", "Dushtu!",
-            "Na bolba na!", "Hobe na!", "Parba na!", "ehhhh khali na na!", "Too slow!",
-            "Raag korso?", "Abar?", "Nah!", "Wrong button!",
-            "Click me if you can!", "Opps!", "Missed!", "bhalo moto try koro hehe!", "eto aste mouse ghuraile hobe?",
-            "Jaanpakhi!", "Sonapakhi!", "babuipakhi!", "Hae bolo na!", "eto jed koro na jaan!",
-            "Vebhe dekho...", "Arek bar vabo", "Sotti?", "Mithuk!", "Ki Poccha meye dekho yes chape na!",
-            "Good girl hoye jao na yes e chap dao", "Pink ta chapo", "ei button ta na bollam to kire!", "Oita na!", "Ei dike!",
-            "Catch me!", "Can't touch this!",
-            "Tumi parba na", "Hae maro bolsi ei mohila kire", "Give up koro na!", "Yes chapo", "Love you!",
-            "Aro ghuraba?", "Tired hou nai?", "Haat betha korbe kintu bole dilam", "Mouse vangbe!", "Ar koybar?",
+            "Sure?", "Abar vabo!", "Babu please?", "eirokom kore na jaan!", 
+            "Asolei?", "Manush ki emon kore naki aschorjo chi chi?", "Emon koro keno jaan?", "reh Hae bolo!",
+            "Last chance!", "kanna kore dibo kintu ekdom!", "Pleaseeeee", "kire mohila maya doya nai naki!", "Dushtu kothakar khali na na!",
+            "Na bolba na!", "Hobe na!", "Parba na!", "ehhhh khali na na!", "onk slow hehe!",
+            "Raag korso?", "Abar?", "Nah ehhhh!", "Wrong button!", "Opps!", "bhalo moto try koro hehe!", "eto aste mouse ghuraile hobe?",
+            "Jaanpakhi!", "Sonapakhi!", "babuipakhi!", "Hae bolo na!", "eto jed kore na jaan!",
+            "Vebhe dekho bole dilam kintu...", "Arek bar vabo jaan", "Sotti?", "Mithuk chi!", "Ki Poccha meye dekho yes chape na!",
+            "Good girl hoye jao na yes e chap dao", "Pink button ta chapo Jaan", "ei button ta na bollam to kire!", "Oita na!", "Ei dike!",
+            "Catch me hehe!",
+            "Tumi parba na", "Hae maro bolsi ei mohila kire", "Give up koro na!", "Yes chapo bollam", "I Love you!",
+            "Aro ghuraba?", "Tired hoye jao nai?", "Haat betha korbe kintu bole dilam", "Mouse vangbe!", "Ar koybar?",
             "Mane jao na!", "Mane nai dekhi ekhno mohila!", "Cholbe na!", "Hobe na re!",
-            "Accept koro", "Kopal!", "Bhalobashi to!",
-            "Rag komao", "Ektu haso", "Smile please!", "Hug chai?", "Kissy chai?"
+            "Accept koro na jaan", "Kopal amar kopal ki bolbo!", "Bhalobashi to hae te vote dao bolsi!",
+            "Rag komao babui", "Ektu haso na haso", "Smile koro na pakhi plsssss!", "Hug chai?", "Kissy dibo?"
         ];
 
         function dodgeNo() {
-            // ১. বাটনটিকে মেইন কন্টেইনার থেকে বের করে সোজা বডিতে নিয়ে আসলাম
-            // এতে করে পজিশন ক্যালকুলেশনে আর কোনো ভুল হবে না। গ্যারান্টিড।
+            //
+            //
             if (noBtn.parentNode !== document.body) {
                 document.body.appendChild(noBtn);
             }
 
-            // ২. নতুন টেক্সট সেট করা
+            //
             const randomText = texts[Math.floor(Math.random() * texts.length)];
             noBtn.innerText = randomText;
 
-            // ৩. পজিশন ফিক্সড করা
+            //
             noBtn.style.position = 'fixed';
 
-            // ৪. উইন্ডো এবং বাটনের সাইজ মাপা
+            //
             const winWidth = window.innerWidth;
             const winHeight = window.innerHeight;
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
 
-            // ৫. সেইফ জোন ক্যালকুলেশন (বর্ডার থেকে ২০ পিক্সেল দূরে)
+            //
             const maxLeft = winWidth - btnWidth - 20;
             const maxTop = winHeight - btnHeight - 20;
 
-            // ৬. র‍্যান্ডম পজিশন
+            //
             const randomX = Math.max(20, Math.random() * maxLeft);
             const randomY = Math.max(20, Math.random() * maxTop);
 
-            // ৭. পজিশন অ্যাপ্লাই করা
+            //
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
 
-        // ইভেন্ট লিসেনার
+        //
         noBtn.addEventListener('mouseover', dodgeNo);
         noBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -229,9 +226,10 @@
             dodgeNo();
         });
 
-        // Yes বাটন লজিক
+        //
         yesBtn.addEventListener('click', () => {
-            // যদি No বাটন বডিতে চলে গিয়ে থাকে, সেটা রিমুভ করে দেই যাতে স্ক্রিন ক্লিয়ার থাকে
+        
+        //
             if (noBtn.parentNode === document.body) {
                 document.body.removeChild(noBtn);
             } else {
@@ -244,7 +242,7 @@
             createSoftConfetti();
         });
 
-        // কনফেটি লজিক
+        //
         function createSoftConfetti() {
             const colors = ['#ffb7b2', '#ffdac1', '#e2f0cb', '#b5ead7', '#c7ceea'];
             for (let i = 0; i < 50; i++) {
