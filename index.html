@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Babuipakhi 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #fff0f5 0%, #e6e6fa 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden; 
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: 0;
+            opacity: 0.5;
+            animation: floatBlob 10s infinite alternate;
+        }
+        .blob:nth-child(1) { width: 350px; height: 350px; top: -50px; left: -50px; background: #ffc3a0; }
+        .blob:nth-child(2) { width: 450px; height: 450px; bottom: -50px; right: -50px; background: #ffafbd; }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            max-width: 90%;
+            width: 550px;
+            /* This transform was breaking fixed positioning before */
+            /* We handle the button by moving it out of here in JS */
+        }
+
+        h1 {
+            color: #ff6b81;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+        }
+
+        .gif-container img {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 20;
+            min-height: 80px; 
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #yesBtn {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            color: white;
+            z-index: 50; 
+            transition: transform 0.2s;
+            white-space: nowrap;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+        }
+
+        #noBtn {
+            background-color: white;
+            color: #ff6b81;
+            border: 2px solid #ffdeeb;
+            z-index: 9999; /* Highest priority */
+            position: relative; 
+            max-width: 300px; /* Prevent it from getting too wide */
+            white-space: normal; /* Allow text wrapping */
+            text-align: center;
+        }
+
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.8s ease; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .love-note {
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob"></div>
+    <div class="blob"></div>
+
+    <div class="container fade-in">
+        <div id="question-section">
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmZlZnd4aGZ6MGY1Z3Z3aGFqNzZ5Y2Z6Z3Z3aGFqNzZ5Y2Z6Z3Z3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Bear Asking">
+            </div>
+            <h1>Will you be my Valentine Babuipakhi? 💖</h1>
+            
+            <div class="buttons">
+                <button id="yesBtn">YES! 🥰</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="success-message" class="hidden">
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/kZqbBT64ECtjy/giphy.gif" alt="Soft Cuddle">
+            </div>
+            <h1>YAYYY! <br> Ami jantam hae bolba! 🌸</h1>
+            <p class="love-note">I Love You Sooooo Much Jaan! ❤️<br>Samne surprise ase tomar jonne hehe!</p>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionSection = document.getElementById('question-section');
+        const successMessage = document.getElementById('success-message');
+
+        // আপনার দেওয়া টেক্সট লিস্ট (হুবহু)
+        const texts = [
+            "Are you sure?", "Think again!", "Babu please?", "eirokom kore na jaan!", 
+            "Really?", "Manush ki emon kore naki aschorjo chi chi?", "Emon koro keno jaan?", "reh Hae bolo!", "Just click Yes!",
+            "Last chance!", "kanna kore dibo kintu ekdom!", "Pleaseeeee", "kire mohila maya doya nai naki!", "Dushtu!",
+            "Na bolba na!", "Hobe na!", "Parba na!", "ehhhh khali na na!", "Too slow!",
+            "Raag korso?", "Abar?", "Nah!", "Wrong button!",
+            "Click me if you can!", "Opps!", "Missed!", "bhalo moto try koro hehe!", "eto aste mouse ghuraile hobe?",
+            "Jaanpakhi!", "Sonapakhi!", "babuipakhi!", "Hae bolo na!", "eto jed koro na jaan!",
+            "Vebhe dekho...", "Arek bar vabo", "Sotti?", "Mithuk!", "Ki Poccha meye dekho yes chape na!",
+            "Good girl hoye jao na yes e chap dao", "Pink ta chapo", "ei button ta na bollam to kire!", "Oita na!", "Ei dike!",
+            "Catch me!", "Can't touch this!",
+            "Tumi parba na", "Hae maro bolsi ei mohila kire", "Give up koro na!", "Yes chapo", "Love you!",
+            "Aro ghuraba?", "Tired hou nai?", "Haat betha korbe kintu bole dilam", "Mouse vangbe!", "Ar koybar?",
+            "Mane jao na!", "Mane nai dekhi ekhno mohila!", "Cholbe na!", "Hobe na re!",
+            "Accept koro", "Kopal!", "Bhalobashi to!",
+            "Rag komao", "Ektu haso", "Smile please!", "Hug chai?", "Kissy chai?"
+        ];
+
+        function dodgeNo() {
+            // ১. বাটনটিকে মেইন কন্টেইনার থেকে বের করে সোজা বডিতে নিয়ে আসলাম
+            // এতে করে পজিশন ক্যালকুলেশনে আর কোনো ভুল হবে না। গ্যারান্টিড।
+            if (noBtn.parentNode !== document.body) {
+                document.body.appendChild(noBtn);
+            }
+
+            // ২. নতুন টেক্সট সেট করা
+            const randomText = texts[Math.floor(Math.random() * texts.length)];
+            noBtn.innerText = randomText;
+
+            // ৩. পজিশন ফিক্সড করা
+            noBtn.style.position = 'fixed';
+
+            // ৪. উইন্ডো এবং বাটনের সাইজ মাপা
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // ৫. সেইফ জোন ক্যালকুলেশন (বর্ডার থেকে ২০ পিক্সেল দূরে)
+            const maxLeft = winWidth - btnWidth - 20;
+            const maxTop = winHeight - btnHeight - 20;
+
+            // ৬. র‍্যান্ডম পজিশন
+            const randomX = Math.max(20, Math.random() * maxLeft);
+            const randomY = Math.max(20, Math.random() * maxTop);
+
+            // ৭. পজিশন অ্যাপ্লাই করা
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // ইভেন্ট লিসেনার
+        noBtn.addEventListener('mouseover', dodgeNo);
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dodgeNo();
+        });
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            dodgeNo();
+        });
+
+        // Yes বাটন লজিক
+        yesBtn.addEventListener('click', () => {
+            // যদি No বাটন বডিতে চলে গিয়ে থাকে, সেটা রিমুভ করে দেই যাতে স্ক্রিন ক্লিয়ার থাকে
+            if (noBtn.parentNode === document.body) {
+                document.body.removeChild(noBtn);
+            } else {
+                noBtn.style.display = 'none';
+            }
+
+            questionSection.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+            successMessage.classList.add('fade-in');
+            createSoftConfetti();
+        });
+
+        // কনফেটি লজিক
+        function createSoftConfetti() {
+            const colors = ['#ffb7b2', '#ffdac1', '#e2f0cb', '#b5ead7', '#c7ceea'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.width = Math.random() * 12 + 8 + 'px';
+                confetti.style.height = Math.random() * 12 + 8 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.opacity = '0.8';
+                confetti.style.borderRadius = '50%';
+                confetti.style.zIndex = '1000';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.animation = `fall ${Math.random() * 4 + 3}s linear forwards`;
+                document.body.appendChild(confetti);
+            }
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fall {
+                    to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>
